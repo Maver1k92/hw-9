@@ -19,7 +19,7 @@ public class UniqueWordsCounter {
         // Считаю количество повторяющихся слов
         HashMap<String,Integer> keyValue = new HashMap<String,Integer>();
 
-        for(int i = 0; i < words.length-1; i++){
+        for(int i = 0; i < words.length; i++){
             if(keyValue.containsKey(words[i])){
                 int counter = keyValue.get(words[i]);
                 keyValue.put(words[i],counter+1 );
