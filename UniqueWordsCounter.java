@@ -1,44 +1,42 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashMap;
 
-public class UserReader {
-    public static void main(String[] args) throws FileNotFoundException {
-        Scanner scanner = new Scanner(new File("file.txt"));
-        List<String> lines = new ArrayList<String>();
-        while (scanner.hasNextLine()) {
-            lines.add(scanner.nextLine());
+public class UniqueWordsCounter {
+    public static void main(String[] args) throws IOException {
+        //Читаю файл
+        String fileName ="words.txt";
+        String contents = readUsingFiles(fileName);
+        contents = contents.replaceAll("\r", " ");
+        contents = contents.replaceAll("\\s+", " ");
+        contents = contents.trim();
+        String[] words = contents.split(" ");
+        System.out.println(Arrays.toString(words));//Вывожу в консоль что записал
+        System.out.println(words.length);
+
+        // Считаю количество повторяющихся слов
+        HashMap<String,Integer> keyValue = new HashMap<String,Integer>();
+
+        for(int i = 0; i < words.length; i++){
+            if(keyValue.containsKey(words[i])){
+                int counter = keyValue.get(words[i]);
+                keyValue.put(words[i],counter+1 );
+            }
+            else {
+                keyValue.put(words[i], 1 );
+            }
         }
-        lines.remove(0);// удаляю лишнюю для меня инфу в 0 элементе
-        //System.out.println(lines);// проверяю что у меня записано в Листе
-        for(String user: lines){
-           // System.out.println(user);
-        }
-        String[] usersList = new String[lines.size()];
-        for(int i = 0; i < lines.size(); i++){
-            usersList[i] = lines.get(i);
-        }
-       // System.out.println(Arrays.toString(usersList));
-        String string = lines.get(0);
+        System.out.println(keyValue);//вывожу в консоль сколько каких слов насчитал
 
 
 
-        List<User> users = new ArrayList<>();
-        for (String row : lines) {
-            String[] array = row.split(" ");
-            String name = array[0];
-            int age = Integer.parseInt(array[1]);
-            users.add(new User(name, age));
 
-        }
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String json = gson.toJson(users);
-        System.out.println(json);
+    }
 
+    private static String readUsingFiles(String fileName) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 }
 
