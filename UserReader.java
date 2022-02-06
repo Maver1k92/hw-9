@@ -14,7 +14,7 @@ public class UserReader {
             lines.add(scanner.nextLine());
         }
         lines.remove(0);// удаляю лишнюю для меня инфу в 0 элементе
-        System.out.println(lines);// проверяю что у меня записано в Листе
+        //System.out.println(lines);// проверяю что у меня записано в Листе
         for(String user: lines){
            // System.out.println(user);
         }
@@ -34,20 +34,12 @@ public class UserReader {
             int age = Integer.parseInt(array[1]);
             users.add(new User(name, age));
 
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        }
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(users);
         System.out.println(json);
-
-
-
-
-
-
     }
-
-
-
-    }}
+}
 
 
 
